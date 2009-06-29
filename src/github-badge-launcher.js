@@ -65,7 +65,11 @@ GitHubBadge.Launcher = new function() {
 GitHubBadge.Launcher.requestContent = function( url, callback ) {
   // inserting via DOM fails in Safari 2.0, so brute force approach
   if ("jQuery" in window) {
-    jQuery.getScript(url,callback);
+    jQuery.getScript(url,function(data)
+			{
+				callback(data);
+			}
+	);
   } else {
     onLoadStr = (typeof callback == "undefined") ? "" : 'onload="' + callback + '()"';
     document.write('<script ' + onLoadStr + 'type="text/javascript" src="'+url+'"></script>');
